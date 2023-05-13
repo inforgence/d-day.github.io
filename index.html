@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: green;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    .wrapper {
+      display: inline-block;
+      margin-top: 20px;
+    }
+
+    h1, p {
+      color: white;
+    }
+
+    p.description {
+      font-weight: bold;
+    }
+
+    .today {
+      background-color: yellow;
+      border: 2px solid red;
+      display: inline-block;
+      padding: 5px;
+    }
+    
+    input {
+      margin: 10px;
+      font-size: 18px;
+    }
+
+    button {
+      margin: 20px;
+    }
+
+    .result {
+      font-weight: bold;
+      color: yellow;
+    }
+
+    .ads {
+      background-color: white;
+      border: 1px solid black;
+      padding: 20px;
+      width: 70%;
+      margin: 20px auto;
+    }
+  </style>
+  <title>D-Day Calculator</title>
+</head>
+<body>
+  <div class="wrapper">
+    <h1>디데이 계산기</h1>
+    <p class="description">D-Day란 상기하는 특별한 날짜입니다. 이 계산기는 두 날짜 간의 남은 기간 및 시간을 계산해 드립니다.</p>
+    <p class="description">기준 날짜와 디데이 날짜를 입력한 후 "계산하기" 버튼을 눌러보세요.</p>
+    <div class="today">오늘: <span id="today"></span></div>
+    <br>
+    <input type="date" id="baseDate" value="">
+    <input type="date" id="dDayDate" value="">
+    <br>
+    <button onclick="calculate()">계산하기</button>
+    <p class="result" id="result"></p>
+    <hr>
+    <h2>기타 디데이 계산</h2>
+    <div id="lovers">
+      <label for="firstDate">남친/여친과 처음 만난 날:</label> 
+      <input type="date" id="firstDate" value="" onchange="calculateLovers()">
+      <p class="result" id="loversResult"></p>
+    </div>
+    <div id="sunung">
+      <p class="result" id="sunungResult"></p>
+    </div>
+    <div id="christmas">
+      <p class="result" id="christmasResult"></p>
+    </div>
+    <div id="remainingYear">
+      <p class="result" id="remainingYearResult"></p>
+    </div>
+    <div id="remainingLife">
+      <label for="birthdate">생년월일:</label>
+      <input type="date" id="birthdate" value="" onchange="calculateRemainingLife()">
+      <label for="gender">성별:</label>
+      <select id="gender" name="gender" onchange="calculateRemainingLife()">
+        <option value="M">남성</option>
+        <option value="F">여성</option>
+      </select>
+      <p class="result" id="remainingLifeResult"></p>
+    </div>
+  </div>
+
+  <div class="ads">
+    광고 자리 ⭐️
+  </div>
+
+  <script>
+    function setDate() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth() + 1;
+      const day = now.getDate();
+      const hour = now.getHours();
+      const minute = now.getMinutes();
+      const second = now.getSeconds();
+      const dayNames = ['일', '월', '화', '수', '목', '금', '토'];
+      const dayOfWeek = dayNames[now.getDay()];
+      const formattedDate = `${year}년 ${month}월 ${day}일 ${dayOfWeek}요일 ${hour}시 ${minute}분 ${second}초`;
+      document.getElementById("today").innerHTML = formattedDate;
+      setTimeout(setDate, 1000);
+    }
+
+    setDate();
+
+    function calculate() {
+      const baseDate = new Date(document.getElementById("baseDate").value);
+      const dDayDate = new Date(document.getElementById("dDayDate").value);
+      const difference = dDayDate.getTime() - baseDate.getTime();
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(difference / (1000 * 60 * 60));
+      document.getElementById("result").innerHTML = `D-Day: ${days}일 (${Math.abs(hours)}시간)`;
+    }
+
+    document.getElementById("baseDate").valueAsDate = new Date();
+
+    function calculateLovers() {
+      const firstDate = new Date(document.getElementById("firstDate").value);
+      const now = new Date();
+      const difference = now.getTime() - firstDate.getTime();
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(difference / (1000 * 60 * 60));
+      document.getElementById("loversResult").innerHTML = `남친/여친과 만난 총 기간: ${days}일 (${hours}시간)`;
+    }
+
+    function calculateRemainingDays(referenceDate, targetDate) {
+      const difference = targetDate.getTime() - referenceDate.getTime();
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(difference / (1000 * 60 * 60));
+      return {days: days, hours: hours};
+    }
+
+    function updateRemainingDays() {
+      const now = new Date();
+      const year = now.getFullYear();
+
+      // 수능일까지 남은 날짜
+      const sunungDate = new Date(year, 10, 17);
+      const sunungRemaining = calculateRemainingDays(now, sunungDate);
+      document.getElementById("sunungResult").innerHTML = `이번 연도 수능 날짜까지 남은 기간: ${sunungRemaining.days}일 (${sunungRemaining.hours}시간)`;
+
+      // 크리스마스까지 남은 날짜
+      const christmasDate = new Date(year, 11, 25);
+      const christmasRemaining = calculateRemainingDays(now, christmasDate);
+      document.getElementById("christmasResult").innerHTML = `크리스마스까지 남은 기간: ${christmasRemaining.days}일 (${christmasRemaining.hours}시간)`;
+
+      // 올해 남은 날짜
+      const remainingYearDate = new Date(year + 1, 0, 1);
+      const remainingYear = calculateRemainingDays(now, remainingYearDate);
+      document.getElementById("remainingYearResult").innerHTML = `올해 남은 기간: ${remainingYear.days}일 (${remainingYear.hours}시간)`;
+    }
+
+    updateRemainingDays();
+    setInterval(updateRemainingDays, 1000 * 60 * 60);
+
+    function calculateRemainingLife() {
+      const birthdate = new Date(document.getElementById("birthdate").value);
+      const gender = document.getElementById("gender").value;
+      const averageLifeExpectancy = gender === "M" ? 81 : 87;
+      const now = new Date();
+      const remainingLifeDate = new Date(birthdate.getFullYear() + averageLifeExpectancy, birthdate.getMonth(), birthdate.getDate());
+      const remainingLife = calculateRemainingDays(now, remainingLifeDate);
+      document.getElementById("remainingLifeResult").innerHTML = `평균 수명 대비 남은 기간: ${remainingLife.days}일 (${remainingLife.hours}시간)`;
+    }
+  </script>
+</body>
+</html>
