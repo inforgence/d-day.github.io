@@ -87,17 +87,19 @@
     </div>
     <div id="remainingYear">
       <p class="result" id="remainingYearResult"></p>
-    </div>
-    <div id="remainingLife">
-      <label for="birthdate">생년월일:</label>
-      <input type="date" id="birthdate" value="" onchange="calculateRemainingLife()">
-      <label for="gender">성별:</label>
-      <select id="gender" name="gender" onchange="calculateRemainingLife()">
-        <option value="M">남성</option>
-        <option value="F">여성</option>
-      </select>
-      <p class="result" id="remainingLifeResult"></p>
-    </div>
+    </div>  
+    <!-- 생년월일, 성별 입력 및 결과 -->
+<div id="remainingLife">
+  <h3>평균 수명 대비 남은 기간</h3>
+  <label for="birthdate">생년월일:</label>
+  <input type="date" id="birthdate" value="" onchange="calculateRemainingLife()">
+  <label for="gender">성별:</label>
+  <select id="gender" name="gender" onchange="calculateRemainingLife()">
+    <option value="M">남성</option>
+    <option value="F">여성</option>
+  </select>
+  <p class="result" id="remainingLifeResult"></p>
+</div>
   </div>
 
   <div class="ads">
@@ -175,8 +177,7 @@ data-ad-height = "100"></ins>
 
     updateRemainingDays();
     setInterval(updateRemainingDays, 1000 * 60 * 60);
-<!-- 평균 수명 대비 남은 기간 -->
-<h3>평균 수명 대비 남은 기간</h3>
+
     function calculateRemainingLife() {
       const birthdate = new Date(document.getElementById("birthdate").value);
       const gender = document.getElementById("gender").value;
