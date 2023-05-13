@@ -56,9 +56,7 @@
 </head>
 <body>
    <!--쿠팡.info-->
-<hr>
-  <hr>
-  <div class="iframes-container">
+   <div class="iframes-container">
     <iframe src="https://coupa.ng/cdPmUE" width="100%" height="75" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe>
   </div>
 <hr>
@@ -177,7 +175,8 @@ data-ad-height = "100"></ins>
 
     updateRemainingDays();
     setInterval(updateRemainingDays, 1000 * 60 * 60);
-
+<!-- 평균 수명 대비 남은 기간 -->
+<h3>평균 수명 대비 남은 기간</h3>
     function calculateRemainingLife() {
       const birthdate = new Date(document.getElementById("birthdate").value);
       const gender = document.getElementById("gender").value;
