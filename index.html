@@ -60,7 +60,17 @@
     <iframe src="https://coupa.ng/cdPmUE" width="100%" height="75" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe>
   </div>
 <hr>
-  
+  <!-- 디데이 계산기 부분 시작 -->
+  <div id="dDay">
+    <h3>기준 날짜</h3>
+    <label for="baseDate">기준 날짜:</label>
+    <input type="date" id="baseDate" value="" onchange="calculateDday()">
+    <h3>디데이 날짜</h3>
+    <label for="dDayDate">디데이 날짜:</label>
+    <input type="date" id="dDayDate" value="" onchange="calculateDday()">
+    <p class="result" id="dDayResult"></p>
+  </div>
+  <!-- 디데이 계산기 부분 끝 -->
   <div class="wrapper">
     <h1>디데이 계산기</h1>
     <p class="description">D-Day란 상기하는 특별한 날짜입니다. 이 계산기는 두 날짜 간의 남은 기간 및 시간을 계산해 드립니다.</p>
