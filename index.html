@@ -179,14 +179,30 @@ data-ad-height = "100"></ins>
     setInterval(updateRemainingDays, 1000 * 60 * 60);
 
     function calculateRemainingLife() {
-      const birthdate = new Date(document.getElementById("birthdate").value);
-      const gender = document.getElementById("gender").value;
-      const averageLifeExpectancy = gender === "M" ? 81 : 87;
-      const now = new Date();
-      const remainingLifeDate = new Date(birthdate.getFullYear() + averageLifeExpectancy, birthdate.getMonth(), birthdate.getDate());
-      const remainingLife = calculateRemainingDays(now, remainingLifeDate);
-      document.getElementById("remainingLifeResult").innerHTML = `평균 수명 대비 남은 기간: ${remainingLife.days}일 (${remainingLife.hours}시간)`;
-    }
+  const birthdate = new Date(document.getElementById("birthdate").value);
+  const gender = document.getElementById("gender").value;
+  const currentLifeExpectancy = gender === "M" ? 73 : 79;
+
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth();
+  const currentDay = currentDate.getDate();
+  const currentHour = currentDate.getHours();
+  const currentMinute = currentDate.getMinutes();
+  const currentSecond = currentDate.getSeconds();
+  const elapsedLifeInYears = (currentDate.getTime() - birthdate.getTime()) / (1000 * 60 * 60 * 24 * 365.25);
+
+  const remainingLifeInYears = currentLifeExpectancy - elapsedLifeInYears;
+  const remainingYears = Math.floor(remainingLifeInYears);
+  const remainingMonths = Math.floor((remainingLifeInYears - remainingYears) * 12);
+  const remainingDays = Math.floor(((remainingLifeInYears - remainingYears) * 365.25) % 30);
+  const remainingHours = Math.floor(((remainingLifeInYears * 365.25 * 24) % 24));
+  const remainingMinutes = Math.floor(((remainingLifeInYears * 365.25 * 24 * 60) % 60));
+  const remainingSeconds = Math.floor(((remainingLifeInYears * 365.25 * 24 * 60 * 60) % 60));
+
+  document.getElementById("remainingLifeResult").innerHTML =
+    "남은 기간: " + remainingYears + "년 " + remainingMonths + "개월 " + remainingDays + "일 " + remainingHours + "시 " + remainingMinutes + "분 " + remainingSeconds + "초";
+}
   </script>
 </body>
 </html>
